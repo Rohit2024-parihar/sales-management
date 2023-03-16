@@ -1,8 +1,6 @@
 import React from 'react'
 import HsnForm from './HsnForm'
 
-
-
 const HsnDetails = () => {
   return (
     <>

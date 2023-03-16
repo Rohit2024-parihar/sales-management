@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { deleteHsn, getHsnList, updateHsnList } from "../../../api/hsnApis";
-
+import { createSlice } from "@reduxjs/toolkit";
+import { deleteHsn, getHsnList, addHsn } from "../../../api/hsnApis";
 
 type HsnProps = {
   loading: boolean;
@@ -11,10 +10,8 @@ type HsnProps = {
 const initialState: HsnProps = {
   loading: false,
   data: [],
-  error: "",
+  error: ""
 };
-
-
 
 const hsnSlice = createSlice({
   name: "HsnList",
@@ -31,18 +28,18 @@ const hsnSlice = createSlice({
     });
     builder.addCase(getHsnList.rejected, (state, action) => {
       state.loading = false;
-      state.error = "";
+      state.error = "error";
       state.data = `${action.payload}`;
     });
-    builder.addCase(updateHsnList.pending, (state) => {
+    builder.addCase(addHsn.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(updateHsnList.fulfilled, (state, action) => {
+    builder.addCase(addHsn.fulfilled, (state: any, action: any) => {
       state.loading = false;
       state.error = "";
-      state.data = action.payload;
+      state.data = state.data.concat(action.payload);
     });
-    builder.addCase(updateHsnList.rejected, (state, action) => {
+    builder.addCase(addHsn.rejected, (state, action) => {
       state.loading = false;
       state.error = "";
       state.data = `${action.payload}`;
@@ -50,17 +47,17 @@ const hsnSlice = createSlice({
     builder.addCase(deleteHsn.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(deleteHsn.fulfilled, (state, action) => {
+    builder.addCase(deleteHsn.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.error = "";
-      state.data = action.payload;
+      state.data = state.data.filter((data: any) => data.id !== (payload as any).id);
     });
     builder.addCase(deleteHsn.rejected, (state, action) => {
       state.loading = false;
       state.error = "";
       state.data = `${action.payload}`;
     });
-  },
+  }
 });
 
 export default hsnSlice.reducer;
