@@ -37,7 +37,7 @@ const hsnSlice = createSlice({
     builder.addCase(addHsn.fulfilled, (state: any, action: any) => {
       state.loading = false;
       state.error = "";
-      state.data = state.data.concat(action.payload);
+      // state.data = state.data.concat(action.payload);
     });
     builder.addCase(addHsn.rejected, (state, action) => {
       state.loading = false;
@@ -50,7 +50,7 @@ const hsnSlice = createSlice({
     builder.addCase(deleteHsn.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.error = "";
-      state.data = state.data.filter((data: any) => data.id !== (payload as any).id);
+      // state.data = state.data.filter((data: any) => data.id !== (payload as any).id);
     });
     builder.addCase(deleteHsn.rejected, (state, action) => {
       state.loading = false;

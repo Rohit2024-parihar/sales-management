@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IHsnDetails } from "../../types/hsndetails";
 import { useDispatch } from "react-redux";
-import { deleteHsn } from "../../api/hsnApis";
+import { deleteHsn, getHsnList } from "../../api/hsnApis";
 import { AppDispatch } from "../../reduxtoolkit/store";
 
 type propsType = {
@@ -21,7 +21,7 @@ const Hsntable = ({ tableRowData }: propsType) => {
 
   const handleClick = (e: React.MouseEvent, row: IHsnDetails) => {
     console.log(row);
-    dispatch(deleteHsn(row));
+    dispatch(deleteHsn(row)).then(() => dispatch(getHsnList()));
   };
 
   const columns = [

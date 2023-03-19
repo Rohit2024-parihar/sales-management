@@ -44,13 +44,14 @@ const HsnForm = () => {
 
   const handleSubmit = (values: IHsnDetails, actions: any) => {
     const hsnData: IHsnDetails = {
-      id: String(values.hsnNo),
       hsnNo: values.hsnNo,
       gst: values.gst
     };
     console.log(actions);
+    dispatch(addHsn(hsnData)).then(()=>{
+      dispatch(getHsnList());
+    })
     actions.resetForm({ values: "" });
-    dispatch(addHsn(hsnData));
   };
 
   return (

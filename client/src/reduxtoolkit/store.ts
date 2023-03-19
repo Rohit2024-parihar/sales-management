@@ -12,7 +12,8 @@ export const store = configureStore({
     companyFormReducer: companyFormSlice,
     app: appSlice,
     medicine: medicineSlice
-  }
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 export default store;
