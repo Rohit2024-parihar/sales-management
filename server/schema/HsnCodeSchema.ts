@@ -2,20 +2,20 @@ import mongoose, { Model, Schema, Types } from 'mongoose';
 
 // Document interface
 export interface HsnCode {
-    code: string;
-    gst: Types.Array<number>;
+    hsnNo: Number;
+    gst: Number;
 }
  
 
 const hsnCodeSchema = new Schema<HsnCode, Model<HsnCode>>({
-    code: {
-        type: 'string',
+    hsnNo: {
+        type: Number,
         unique: true,
         required: true
     },
     gst:{
         required: true,
-        type: [Number]
+        type: Number
     }
 });
 

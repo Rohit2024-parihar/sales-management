@@ -6,9 +6,14 @@ import { companyRouter } from './routes/companyRoutes.js';
 import { medicineRouter } from './routes/medicineRoutes.js';
 import { NotFoundError } from './errors/NotFoundError.js';
 import { vendorRouter } from './routes/vendorRoutes.js';
+import cors from 'cors'
+
+// use it before all route definitions
 
 
 export const app = express();
+app.use(cors({origin: "*"}));
+
 
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
