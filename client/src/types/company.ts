@@ -4,5 +4,7 @@ export  interface IcompanyName {
   }
   export  interface IcompanyNamestate {
     companyName : IcompanyName[]
+    loading?:boolean
+    error?:string
   }
 
