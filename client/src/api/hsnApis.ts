@@ -1,16 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { mockHsnResponse, updatedHsnResponse } from "../mockDataHsn";
+import { mockHsnResponse } from "../mockData";
 import { IHsnDetails } from "../types/hsndetails";
 
 export const getHsnList = createAsyncThunk("user/getHsnList", async () => {
   // need replace with actual Api
   try {
-    const response = await axios.get(
-      `https://jsonplaceholder.typicode.com/posts`
-    );
+    // const response = await axios.get(`${ENDPOINT}/getAllhsn`);
+    // const response = await response.json();
+    // return response
     return mockHsnResponse;
-  } catch (error) {}
+  } catch (error) {
+    //console.log(error)
+  }
 });
 
 export const addHsn = createAsyncThunk(
@@ -19,11 +21,13 @@ export const addHsn = createAsyncThunk(
     console.log(hanValu, "hanValu");
     // need replace with actual Api
     try {
-      const response = await axios.get(
-        `https://jsonplaceholder.typicode.com/posts`
-      );
+      // const response = await axios.get(`${ENDPOINT}/hsn`);
+      // const response = await response.json();
+      // return response
       return hanValu;
-    } catch (error) {}
+    } catch (error) {
+      //console.log(error)
+    }
   }
 );
 
@@ -32,10 +36,12 @@ export const deleteHsn = createAsyncThunk(
   async (row: IHsnDetails, { dispatch }) => {
     // need replace with actual Api
     try {
-      const response = await axios.get(
-        `https://jsonplaceholder.typicode.com/posts`
-      );
+      // const response = await axios.get(`${ENDPOINT}/id`);
+      // const response = await response.json();
+      // return response
       return row;
-    } catch (error) {}
+    } catch (error) {
+      //console.log(error)
+    }
   }
 );

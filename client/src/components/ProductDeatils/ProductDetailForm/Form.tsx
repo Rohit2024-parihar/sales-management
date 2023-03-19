@@ -8,29 +8,40 @@ import {
   Select,
   TextField
 } from "@mui/material";
-import { Form, Formik } from "formik";
-import React from "react";
+import { Form, Formik, useFormikContext } from "formik";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addMedicine, updateMedicine } from "../../../api/ProductDetailApi";
+import { AppDispatch, RootState } from "../../../reduxtoolkit/store";
+import { ImedicineDetail } from "../../../types/ProductDetail";
 import "./Form.css";
 import { medicineInitialState, validationSchema } from "./model";
 
-const ProductDetailForm = () => {
+type ProductDetailForm = {
+  closeModel: () => void;
+  isEdit: boolean,
+  formData: ImedicineDetail
+};
+
+const ProductDetailForm = ({ closeModel, isEdit, formData }: ProductDetailForm) => {
+
   const companies = ["apllo", "xyz", "abc"];
   const hsnCodes = [3001, 3002, 3003];
-  const gst = ["5%", "10%", "15%", "20%"];
+  const gst = [5, 10, 18, 20];
 
-
+  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <Formik
-      initialValues={medicineInitialState}
+      initialValues={formData}
       validationSchema={validationSchema}
-      onSubmit={(values: any) => {
-        console.log(values);
+      onSubmit={(values: ImedicineDetail) => {
+        isEdit ? dispatch(updateMedicine(values)) : dispatch(addMedicine(values))
       }}
     >
       {({ values, touched, errors, handleChange, handleBlur }) => (
         <Form>
-          <h1>Add Medicine</h1>
+          <h1>{isEdit ? "Edit" : "Add"} Medicine</h1>
           <div>
             <code>touched:</code> {JSON.stringify(touched, null, 2)}
           </div>
@@ -154,10 +165,19 @@ const ProductDetailForm = () => {
                 )}
               </FormControl>
             </Grid>
-
-            <Button color="primary" variant="contained" fullWidth type="submit">
-              Submit
-            </Button>
+            <Grid item xs={12}>
+              <Button color="primary" variant="contained" type="submit">
+                Submit
+              </Button>
+              <Button
+                onClick={closeModel}
+                color="primary"
+                variant="contained"
+                type="button"
+              >
+                Close
+              </Button>
+            </Grid>
           </Grid>
         </Form>
       )}
