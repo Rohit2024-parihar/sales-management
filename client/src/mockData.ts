@@ -38,3 +38,11 @@ export const mockMedicineResponse = [
     gst: 18
   }
 ];
+export const mockCompanyResponse = [{ id: "1", company: "Appolo" }];
+export const updatedHsnResponse = [
+  {
+    id: "1",
+    hsnNo: "234567",
+    gst: "10",
+  },
+];

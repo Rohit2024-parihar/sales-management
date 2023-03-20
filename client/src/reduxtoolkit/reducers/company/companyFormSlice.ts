@@ -1,21 +1,58 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  addCompany,
+  getCompanyList,
+  deleteCompany,
+} from "../../../api/companyApis";
 import { IcompanyName, IcompanyNamestate } from "../../../types/company";
 const initialState: IcompanyNamestate = {
   companyName: [],
+  loading: false,
+  error: "",
 };
 const companyFormSlice = createSlice({
   name: "companyForm",
   initialState,
-  reducers: {
-    updateCompany: (state, { payload }) => {
-      state.companyName = [...state.companyName, payload];
-    },
-    deleteCompany: (state, { payload }: PayloadAction<IcompanyName>) => {
-      state.companyName = state.companyName.filter((company) => {
-        return company.id !== payload.id;
-      });
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getCompanyList.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getCompanyList.fulfilled, (state, action: any) => {
+      state.loading = false;
+      state.error = "";
+      state.companyName = action.payload;
+    });
+    builder.addCase(getCompanyList.rejected, (state, action) => {
+      state.loading = false;
+      state.error = `${action.payload}`;
+    });
+    builder.addCase(addCompany.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(addCompany.fulfilled, (state: any, action: any) => {
+      state.loading = false;
+      state.error = "";
+      state.companyName = state.companyName.concat(action.payload);
+    });
+    builder.addCase(addCompany.rejected, (state, action) => {
+      state.loading = false;
+      state.error = `${action.payload}`;
+    });
+    builder.addCase(deleteCompany.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteCompany.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.error = "";
+      state.companyName = state.companyName.filter(
+        (data: any) => data.id !== (payload as any).id
+      );
+    });
+    builder.addCase(deleteCompany.rejected, (state, action) => {
+      state.loading = false;
+      state.error = `${action.payload}`;
+    });
   },
 });
-export const { updateCompany, deleteCompany } = companyFormSlice.actions;
 export default companyFormSlice.reducer;

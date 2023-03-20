@@ -1,9 +1,12 @@
 import { Button, Grid, TextField } from "@mui/material";
 import { nanoid } from "@reduxjs/toolkit";
 import { Form, Formik } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCompany } from "../../reduxtoolkit/reducers/company/companyFormSlice";
+import { addCompany, getCompanyList } from "../../api/companyApis";
+import { getHsnList } from "../../api/hsnApis";
+import { AppDispatch } from "../../reduxtoolkit/store";
+// import { updateCompany } from "../../reduxtoolkit/reducers/company/companyFormSlice";
 import CompanyTable from "./CompanyTable";
 import { validationSchemaCompany } from "./validations";
 
@@ -12,14 +15,18 @@ const initialstate = {
 };
 
 function CompanyForm() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(getCompanyList());
+  }, []);
   return (
     <div>
       <Formik
         initialValues={initialstate}
         validationSchema={validationSchemaCompany}
         onSubmit={(values , {resetForm}) => {
-          dispatch(updateCompany({ ...values, id: nanoid() }));
+          dispatch(addCompany({ ...values, id: nanoid() }));
           resetForm()
         }}
       >

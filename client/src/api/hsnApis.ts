@@ -2,10 +2,9 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { mockHsnResponse } from "../mockData";
 import { IHsnDetails } from "../types/hsndetails";
-
 export const getHsnList = createAsyncThunk("user/getHsnList", async () => {
   // need replace with actual Api
-  try {
+  try{
     // const response = await axios.get(`${ENDPOINT}/getAllhsn`);
     // const response = await response.json();
     // return response

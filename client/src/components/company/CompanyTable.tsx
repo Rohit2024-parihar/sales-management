@@ -3,10 +3,11 @@ import { DataGrid  } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../reduxtoolkit/store";
-import { deleteCompany } from "../../reduxtoolkit/reducers/company/companyFormSlice";
+import { AppDispatch, RootState } from "../../reduxtoolkit/store";
+import { deleteCompany } from "../../api/companyApis";
+
 function CompanyTable() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const state = useSelector(( state : RootState ) => state.companyFormReducer.companyName  ) 
     const columns = [
         { field: "company", headerName: "Company" ,    width: 400 },
