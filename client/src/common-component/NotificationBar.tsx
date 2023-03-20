@@ -6,7 +6,7 @@ import { RootState } from "../reduxtoolkit/store";
 
 const NotificationBar = () => {
   const dispatch = useDispatch();
-  const notificationState = useSelector((state: RootState) => state.app.notificationState);
+  const {notificationState,message,severity} = useSelector((state: RootState) => state.app);
   const handleClose = (event?: any, reason?: any) => {
     if (reason === "clickaway") {
       return;
@@ -22,8 +22,8 @@ const NotificationBar = () => {
         onClose={handleClose}
         anchorOrigin={{vertical:'top',horizontal:'center'}}
       >
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          This is a success message!
+        <Alert onClose={handleClose} severity={severity} sx={{ width: "100%" }}>
+         {message}
         </Alert>
       </Snackbar>
     </>

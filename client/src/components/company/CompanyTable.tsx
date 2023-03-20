@@ -7,7 +7,7 @@ import { AppDispatch, RootState } from "../../reduxtoolkit/store";
 import { deleteCompany, getCompanyList } from "../../api/companyApis";
 
 function CompanyTable() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<AppDispatch>()
     const state = useSelector(( state : RootState ) => state.companyFormReducer.companyName  ) 
     const columns = [
         { field: "companyName", headerName: "Company" ,    width: 400 },

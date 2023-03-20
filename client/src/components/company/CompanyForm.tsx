@@ -3,7 +3,6 @@ import { Form, Formik } from "formik";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { addCompany, getCompanyList } from "../../api/companyApis";
-import { updateCompany } from "../../reduxtoolkit/reducers/company/companyFormSlice";
 import { AppDispatch } from "../../reduxtoolkit/store";
 import CompanyTable from "./CompanyTable";
 import { validationSchemaCompany } from "./validations";

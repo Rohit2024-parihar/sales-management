@@ -3,6 +3,8 @@ import { addCompany, getCompanyList } from "../../../api/companyApis";
 import { IcompanyName, IcompanyNamestate } from "../../../types/company";
 const initialState: IcompanyNamestate = {
   companyName: [],
+  loading: false,
+  error: "",
 };
 const companyFormSlice = createSlice({
   name: "companyForm",
@@ -47,5 +49,4 @@ const companyFormSlice = createSlice({
     });
   },
 });
-export const { updateCompany, deleteCompany } = companyFormSlice.actions;
 export default companyFormSlice.reducer;
