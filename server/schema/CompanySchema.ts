@@ -2,12 +2,12 @@ import mongoose, { Schema} from 'mongoose';
 
 // Document interface
 export interface Company {
-    name: String;
+    companyName: String;
 }
 
 
 const companySchema = new Schema<Company>({
-    name:{
+    companyName:{
         type: String,
         required: true,
         unique:true,

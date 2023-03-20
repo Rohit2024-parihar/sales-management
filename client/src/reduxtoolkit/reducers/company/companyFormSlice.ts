@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { addCompany, getCompanyList } from "../../../api/companyApis";
+import { addCompany, deleteCompany, getCompanyList } from "../../../api/companyApis";
 import { IcompanyName, IcompanyNamestate } from "../../../types/company";
 const initialState: IcompanyNamestate = {
   companyName: [],

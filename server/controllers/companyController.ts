@@ -1,23 +1,26 @@
 import { Request, Response } from "express";
 import CompanyModel, { Company } from "../schema/CompanySchema.js";
+import { asyncErrorHandler } from "../helpers/asyncErrorHandler.js"
 
-export const addCompany = async (req: Request, res: Response) => {
+export const addCompany = asyncErrorHandler(async (req: Request, res: Response) => {
     const company: Company = req.body;
-    if(!company.name){
+    console.log(company)
+    if (!company.companyName) {
         console.log(' Company name cant be empty');
-        res.json({status:'notOk' });
+        res.json({ status: 'notOk' });
     }
-    
+
     const newCompany = await CompanyModel.create(company);
-    res.json({status:'ok', medicine: newCompany });
-}
+    res.json({ status: 'ok', company: newCompany });
+})
 
-export const getAllCompany = async (req, res) => {
-   const company = await CompanyModel.find();
-    res.json({company, status:'ok'});
-} 
+export const getAllCompany = asyncErrorHandler(async (req, res) => {
+    const company = await CompanyModel.find();
+    res.json({ company, status: 'ok' });
+})
 
-// export const deleteMedicineById = async (req, res) => {
-//     // const hsncodes = await HsnModel.find();
-//     //  res.json({hsncodes, status:'ok'});
-//  } 
+export const deleteCompanyById = asyncErrorHandler(async (req, res) => {
+    const { id } = req.params;
+    const company = await CompanyModel.deleteOne({ _id: id });
+    res.json({ company, status: 'ok' });
+})
