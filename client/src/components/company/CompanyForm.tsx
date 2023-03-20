@@ -1,25 +1,33 @@
 import { Button, Grid, TextField } from "@mui/material";
-import { nanoid } from "@reduxjs/toolkit";
 import { Form, Formik } from "formik";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addCompany, getCompanyList } from "../../api/companyApis";
 import { updateCompany } from "../../reduxtoolkit/reducers/company/companyFormSlice";
+import { AppDispatch } from "../../reduxtoolkit/store";
 import CompanyTable from "./CompanyTable";
 import { validationSchemaCompany } from "./validations";
 
 const initialstate = {
-  company: "",
+  companyName: "",
 };
 
 function CompanyForm() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+
+  React.useEffect(() => {
+    dispatch(getCompanyList());
+  }, []);
+
   return (
     <div>
       <Formik
         initialValues={initialstate}
         validationSchema={validationSchemaCompany}
         onSubmit={(values , {resetForm}) => {
-          dispatch(updateCompany({ ...values, id: nanoid() }));
+          dispatch(addCompany(values)).then(() =>{
+            dispatch(getCompanyList())
+          })
           resetForm()
         }}
       >
@@ -30,7 +38,6 @@ function CompanyForm() {
           handleChange,
           handleBlur,
         }) => {
-          console.log(values);
           return (
             <Form>
               <h1>COMPANY</h1>
@@ -38,13 +45,13 @@ function CompanyForm() {
                 <Grid item xs={4}>
                   <TextField
                     fullWidth
-                    id="company"
-                    name="company"
+                    id="companyName"
+                    name="companyName"
                     label="Company name"
-                    value={values.company}
+                    value={values.companyName}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    error={touched.company && Boolean(errors.company)}
+                    error={touched.companyName && Boolean(errors.companyName)}
                   />
                 </Grid>
                 <Button

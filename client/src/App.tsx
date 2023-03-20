@@ -46,7 +46,7 @@ const tabs: any = [
 const App = () => {
   return (
     <>
-      <NotificationBar />
+      {/* <NotificationBar /> */}
       <TabsView tabs={tabs} activeTabs={"1"} />
     </>
   );

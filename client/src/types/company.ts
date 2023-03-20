@@ -1,6 +1,6 @@
 export  interface IcompanyName {
-    id: string;
-    company : string
+    id?: string;
+    companyName : string
   }
   export  interface IcompanyNamestate {
     companyName : IcompanyName[]
