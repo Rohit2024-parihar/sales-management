@@ -2,20 +2,23 @@ import { Button, Modal } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteMedicine, getAllmedicine, updateMedicine } from "../../api/ProductDetailApi";
+import {
+  deleteMedicine,
+  getAllmedicine,
+  updateMedicine,
+} from "../../api/ProductDetailApi";
 import { AppDispatch, RootState } from "../../reduxtoolkit/store";
 import ProductDetailForm from "./ProductDetailForm/Form";
 import ProductDetailTable from "./ProductDetailTable/ProductTable";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import { ImedicineDetail } from "../../types/ProductDetail";
 import { medicineInitialState } from "./ProductDetailForm/model";
 
 export type productColumn = {
-  id: string,
-  label: string,
-  minWidth?: number,
-  renderCell: any
+  field: string;
+  headerName: string;
+  width?: number;
 };
 
 const ProductDeatilSetup = () => {
@@ -23,45 +26,29 @@ const ProductDeatilSetup = () => {
   const { loading, data, error } = useSelector(
     (state: RootState) => state.medicine
   );
-
-  const columns: productColumn[] = [
-    { id: "medicineName", label: "Medicine Name", minWidth: 170, renderCell: (row: any, id: any) => <>{row[id]}</> },
-    { id: "saltName", label: "Salt Name", minWidth: 100, renderCell: (row: any, id: any) => <>{row[id]}</> },
+  const columns = [
+    { field: "medicineName", headerName: "Company", width: 400 },
+    { field: "saltName", headerName: "Company", width: 400 },
+    { field: "companyName", headerName: "Company", width: 400 },
+    { field: "hsnCode", headerName: "Company", width: 400 },
+    { field: "gst", headerName: "Company", width: 400 },
     {
-      id: "companyName",
-      label: "Company Name",
-      minWidth: 170,
-      renderCell: (row: any, id: any) => <>{row[id]}</>
-    },
-    {
-      id: "hsnCode",
-      label: "HSN Code",
-      minWidth: 170,
-      renderCell: (row: any, id: any) => <>{row[id]}</>
-    },
-    {
-      id: "gst",
-      label: "GST",
-      minWidth: 170,
-      renderCell: (row: any, id: any) => <>{row[id]}</>
-    },
-    {
-      id: "actions",
-      label: "Actions",
-      minWidth: 170,
-      renderCell: (params: ImedicineDetail) => {
+      field: "actions",
+      headerName: "Actions",
+      width: 400,
+      renderCell: (params: any) => {
         return (
           <>
-            <Button onClick={() => dispatch(deleteMedicine(params))}>
+            <Button onClick={() => dispatch(deleteMedicine(params.row))}>
               <DeleteIcon style={{ color: "black" }} />
             </Button>
-            <Button onClick={() => onEditProductdetailForm(params)}>
+            <Button onClick={() => onEditProductdetailForm(params.row)}>
               <EditIcon style={{ color: "black" }} />
             </Button>
           </>
         );
       },
-    }
+    },
   ];
 
   const [showProductForm, setShowProductForm] = useState(false);
@@ -73,11 +60,11 @@ const ProductDeatilSetup = () => {
   }, []);
 
   const onEditProductdetailForm = (params: ImedicineDetail) => {
-    console.log(params)
+    console.log(params);
     setFormData(params);
     setIsEditProductForm(true);
-    openProductDetailModel()
-  }
+    openProductDetailModel();
+  };
 
   const closeProductDetailModel = (_: any, reason: any) => {
     if (reason && reason === "backdropClick" && "escapeKeyDown") return;
@@ -93,8 +80,8 @@ const ProductDeatilSetup = () => {
   const addMedicine = () => {
     setFormData(medicineInitialState);
     setIsEditProductForm(false);
-    openProductDetailModel()
-  }
+    openProductDetailModel();
+  };
   const style = {
     position: "absolute",
     top: "50%",
@@ -104,7 +91,7 @@ const ProductDeatilSetup = () => {
     bgcolor: "white",
     border: "2px solid #000",
     boxShadow: 24,
-    p: 4
+    p: 4,
   };
 
   return (
@@ -116,7 +103,11 @@ const ProductDeatilSetup = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <ProductDetailForm isEdit={isEditProductForm} closeModel={closeModel} formData={formData} />
+          <ProductDetailForm
+            isEdit={isEditProductForm}
+            closeModel={closeModel}
+            formData={formData}
+          />
         </Box>
       </Modal>
       <ProductDetailTable columns={columns} data={data} />
